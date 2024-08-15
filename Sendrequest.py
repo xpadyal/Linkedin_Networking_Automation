@@ -8,12 +8,16 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
 from langchain_cohere import ChatCohere
 
+load_dotenv()
+
+os.getenv("COHERE_API_KEY")
+
 def generate_message(sender_name):
-    os.environ["COHERE_API_KEY"] = "KzzamuEHYNDNBc65wgnxklRcngZA1agQC8UxOVu6"
+    
     model = ChatCohere(model="command-r-plus", max_tokens=None, temperature=0)
     prompt = PromptTemplate.from_template("Write a very short message for sending a connection request on linkedin, the sender is {input} and don't add Hi Recepient Name, only the message without any fillin the blanks. Just the sender's name")
     chain = prompt | model

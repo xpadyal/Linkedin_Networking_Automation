@@ -4,16 +4,22 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 import time
 import pandas as pd
-from langchain_community.llms import EdenAI
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from langchain_core.prompts import PromptTemplate
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import re
+from langchain_openai import OpenAI
+from dotenv import load_dotenv
+import os
 
-EDENAI_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMmI3NzU3ZWQtNmM2OC00MGZiLTk4Y2ItNzY4NWQ1MDA2YjE5IiwidHlwZSI6ImFwaV90b2tlbiJ9.OZmb2bq5MXIKZC9_BUXpaMrHyu3PjJ53nMrGlN7NV_s"
-llm = EdenAI(edenai_api_key=EDENAI_API_KEY, provider="openai", temperature=0, max_tokens=250)
+load_dotenv()
+
+
+os.getenv("OPENAI_API_KEY")
+
+llm = OpenAI(temperature=0, max_tokens=250)
 
 def initialize_driver():
     options = Options()
@@ -106,13 +112,13 @@ def comment_on_post(driver, i, text):
 
 
 
-def analyze_post_with_llm(post_text):
+def analyze_post_with_llm(post_text, job_query):
     
     prompt_template = PromptTemplate.from_template(
-        """I am giving you linkedin posts, you will go through the post and tell weather this is a hiring  post or not. Here is the post "{post}", only say yes or no"""
+        """I am giving you linkedin posts, you will go through the post and tell weather this is a {job_query} hiring  post or not. Here is the post "{post}", only say yes or no"""
     )
 
-    query = prompt_template.format(post=post_text)
+    query = prompt_template.format(post=post_text, job_query= job_query)
     response = llm.invoke(query)
     print(f"Raw response from LLM: {response}")  # Debugging output
     # Ensure the response is parsed correctly if it's a JSON string

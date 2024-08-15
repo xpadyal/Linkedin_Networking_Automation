@@ -105,7 +105,7 @@ with st.expander("Comment on LinkedIn Feed for Hiring Posts"):
     password = st.text_input("LinkedIn Password for Scraping", type="password", key="scrape_password")
     custom_message = st.text_input("Custom Comment Message", value="Interesting")
         # search = st.text_input("Search Query", key="search_query")
-
+    post_search_query = st.text_input("What kind of hiring post you want to look for?" , key="job-query")
     if st.button("Start Automation"):
         if email and password and custom_message:
             driver = initialize_driver()
@@ -119,7 +119,7 @@ with st.expander("Comment on LinkedIn Feed for Hiring Posts"):
                 post_text = post_element.text
                 st.write(f"Analyzing post {i + 1}: {post_text[:100]}...")
                 
-                if analyze_post_with_llm(post_text):
+                if analyze_post_with_llm(post_text,post_search_query):
                     st.write(f"Post {i + 1} is a hiring post. Commenting...")
                     comment_on_post(driver, i, custom_message)
                     st.write(f"Commented on post {i + 1}.")
@@ -175,7 +175,7 @@ with st.expander("Login and Search Jobs"):
 with st.expander("Find Relevant Jobs Based on Resume"):
     st.header("Find Relevant Jobs Based on Resume")
     uploaded_file = st.file_uploader("Upload your resume (PDF format)", type=["docx", "pdf"])
-
+    
     if uploaded_file is not None:
         resumetxt = extract_skills_from_resume(uploaded_file)
         st.write("Extracted Skills:", resumetxt)

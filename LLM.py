@@ -9,10 +9,13 @@ from pinecone import Pinecone, ServerlessSpec
 from langchain_openai import OpenAI
 from langchain.chains import RetrievalQA
 from langchain_core.prompts import PromptTemplate
+from dotenv import load_dotenv
 
 # Initialize Pinecone and LLM globally
-pine=os.environ['PINECONE_API_KEY'] = "9957e36c-76fc-428c-a38d-e9dc9778ad56"
-os.environ['OPENAI_API_KEY'] = "sk-R8iAuCMCEXUot-vOJ1nLDxDNScJ2hjUyEz7Cnemc5RT3BlbkFJPXYWC09KL4v3za8k6HnM6CtiLPinkOJUx7PDb8jq8A"
+load_dotenv()
+
+pine=os.getenv("PINECONE_API_KEY")
+os.getenv("OPENAI_API_KEY")
 llm = OpenAI(temperature=0, max_tokens=250)
 pc = Pinecone(api_key=pine)
 
@@ -50,13 +53,18 @@ def convert_csv_to_text(filtered_csv_file_path, output_text_file_path):
 # Function to create Pinecone index and vector store
 def create_pinecone_index_and_store(structured_text_file_path, index_name="job-listing", chunk_size=1000, chunk_overlap=50):
     existing_indexes = [index_info["name"] for index_info in pc.list_indexes()]
+
+    if index_name in existing_indexes:
+        pc.delete_index(index_name)
     
+    existing_indexes = [index_info["name"] for index_info in pc.list_indexes()]
+
     if index_name not in existing_indexes:
         
     
         pc.create_index(
             name=index_name,
-            dimension=1536,
+            dimension=3072,
             metric="cosine",
             spec=ServerlessSpec(cloud="aws", region="us-east-1")
         )
