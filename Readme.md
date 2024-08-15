@@ -81,7 +81,9 @@ The LinkedIn Automation Tool combines automation, AI, and data analysis to enhan
 3. streamlit run main.py
 
 ### Contact Us
-Github: github.com/xpadyal
-linkedin:linkedin.com/in/sahil-padyal
-email: padyal.s@northeastern.edu
+1.Github: github.com/xpadyal
+
+2.linkedin:linkedin.com/in/sahil-padyal
+
+3.Email: padyal.s@northeastern.edu
 
