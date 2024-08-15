@@ -1,5 +1,5 @@
 # LinkedIn Automation Tool
-
+Link to Video: https://youtu.be/GglEC2qYuc8
 ## Overview
 
 The LinkedIn Automation Tool is designed to streamline networking, job searching, and professional communication on LinkedIn by leveraging automation and AI technologies. This tool helps users automate connection requests, scrape and analyze LinkedIn feeds, and provides job recommendations based on the user's resume.
