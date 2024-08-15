@@ -80,3 +80,8 @@ The LinkedIn Automation Tool combines automation, AI, and data analysis to enhan
 2. pip install -r requirements.txt
 3. streamlit run main.py
 
+### Contact Us
+Github: github.com/xpadyal
+linkedin:linkedin.com/in/sahil-padyal
+email: padyal.s@northeastern.edu
+
